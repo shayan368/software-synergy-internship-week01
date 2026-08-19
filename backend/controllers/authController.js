@@ -38,7 +38,7 @@ export const register = async (req, res) => {
         });
 
         const verificationLink =
-            `http://localhost:5173/verify/${verificationToken}`;
+            `${process.env.FRONTEND_URL || 'http://localhost:5173'}/verify/${verificationToken}`;
 
         await sendEmail(
             email,
@@ -232,7 +232,7 @@ export const forgotPassword = async (req, res) => {
         user.resetTokenExpiry = Date.now() + 60 * 60 * 1000; // 1 hour
         await user.save();
 
-        const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+        const resetLink = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password/${resetToken}`;
 
         await sendEmail(
             user.email,
